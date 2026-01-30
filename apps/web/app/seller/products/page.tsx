@@ -1,11 +1,11 @@
 'use client';
 
 import Link from 'next/link';
-import { products } from '../../data/products';
-import { SidebarLayout } from '../../components/Sidebar';
+import { products } from '../../../data/products';
+import { SidebarLayout } from '../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 
-export default function SellerDashboard() {
+export default function SellerProductsPage() {
   const t = useTranslations('landing');
   const tSidebar = useTranslations('sidebar');
 
@@ -21,10 +21,8 @@ export default function SellerDashboard() {
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
-              {t('sellerDashboard')}
-            </h1>
-            <p className="text-gray-600 dark:text-gray-400">{t('sellerDashboardDesc')}</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Products</h1>
+            <p className="text-gray-600 dark:text-gray-400">Manage your product listings</p>
           </div>
           <Link
             href="/seller/new"
