@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 
 export default function SellerDashboard() {
   const t = useTranslations('landing');
-  const tSidebar = useTranslations('sidebar');
 
   const sidebarItems = [
     { href: '/seller', label: 'Dashboard', icon: '📊', translationKey: 'dashboard' },

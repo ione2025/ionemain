@@ -1,4 +1,4 @@
-import OrderDetailClient from './OrderDetailClient';
+import SellerOrderDetailClient from './SellerOrderDetailClient';
 import { orders } from '../../../../data/orders';
 
 export function generateStaticParams() {
@@ -7,6 +7,6 @@ export function generateStaticParams() {
   }));
 }
 
-export default function OrderDetailPage() {
-  return <OrderDetailClient />;
+export default function SellerOrderDetailPage() {
+  return <SellerOrderDetailClient />;
 }

@@ -14,7 +14,6 @@ export default function OrdersPage() {
   const { formatPrice } = useCurrency();
   const router = useRouter();
   const t = useTranslations('orders');
-  const tSidebar = useTranslations('sidebar');
   const tCommon = useTranslations('common');
 
   useEffect(() => {

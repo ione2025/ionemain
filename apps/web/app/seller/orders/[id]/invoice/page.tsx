@@ -1,4 +1,4 @@
-import InvoiceClient from './InvoiceClient';
+import SellerInvoiceClient from './SellerInvoiceClient';
 import { orders } from '../../../../../data/orders';
 
 export function generateStaticParams() {
@@ -7,6 +7,6 @@ export function generateStaticParams() {
   }));
 }
 
-export default function InvoicePage() {
-  return <InvoiceClient />;
+export default function SellerInvoicePage() {
+  return <SellerInvoiceClient />;
 }
