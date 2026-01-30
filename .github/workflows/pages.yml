@@ -17,9 +17,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/web
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v3
@@ -30,8 +27,11 @@ jobs:
           node-version: 20
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'  # root workspace lockfile
+      # Install at workspace root so all packages are linked correctly
       - run: pnpm install --frozen-lockfile
-      - run: pnpm build
+      # Build only the web app package (runs "next build && next export" in apps/web)
+      - run: pnpm --filter @ionecenter/web build
+      # Upload the static export
       - uses: actions/upload-pages-artifact@v3
         with:
           path: apps/web/out
