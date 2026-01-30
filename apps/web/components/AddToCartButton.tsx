@@ -8,7 +8,7 @@ export function AddToCartButton({ product }: { product: Product }) {
   return (
     <button
       onClick={() => addItem(product, 1)}
-      className="mt-3 rounded border px-3 py-2 bg-white dark:bg-gray-900 dark:border-gray-700"
+      className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
     >
       Add to cart
     </button>

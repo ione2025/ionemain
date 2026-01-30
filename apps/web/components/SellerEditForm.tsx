@@ -19,61 +19,83 @@ export function SellerEditForm({ id }: { id: string }) {
   };
 
   if (!existing) {
-    return <div>Product not found.</div>;
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+        <div className="max-w-3xl mx-auto px-6 py-8">
+          <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 text-center">
+            <p className="text-gray-400">Product not found.</p>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <>
-      <h1 className="text-2xl font-bold mb-4">Edit Product</h1>
-      <form
-        onSubmit={submit}
-        className="space-y-3 bg-white dark:bg-gray-950 p-4 border dark:border-gray-800 rounded"
-      >
-        <div>
-          <label className="block text-sm mb-1">Name</label>
-          <input
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            className="w-full rounded border p-2 bg-white dark:bg-gray-900 dark:border-gray-700"
-            required
-          />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <div className="max-w-3xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">Edit Product</h1>
+          <p className="text-gray-400">Update your product listing</p>
         </div>
-        <div>
-          <label className="block text-sm mb-1">Price</label>
-          <input
-            type="number"
-            step="0.01"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-            className="w-full rounded border p-2 bg-white dark:bg-gray-900 dark:border-gray-700"
-            required
-          />
+        
+        <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 shadow-2xl">
+          <form onSubmit={submit} className="space-y-6">
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Product Name</label>
+              <input
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Price</label>
+              <input
+                type="number"
+                step="0.01"
+                value={price}
+                onChange={(e) => setPrice(Number(e.target.value))}
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                required
+              />
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Category</label>
+              <select
+                value={category}
+                onChange={(e) =>
+                  setCategory(e.target.value as 'Electronics' | 'Apparel' | 'Home & Garden')
+                }
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-xl text-white focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+              >
+                <option>Electronics</option>
+                <option>Apparel</option>
+                <option>Home & Garden</option>
+              </select>
+            </div>
+            
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">Description</label>
+              <textarea
+                value={desc}
+                onChange={(e) => setDesc(e.target.value)}
+                className="w-full px-4 py-3 bg-gray-900/50 border border-gray-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-colors"
+                rows={4}
+              />
+            </div>
+            
+            <button
+              type="submit"
+              className="w-full py-3 px-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
+            >
+              Update Product (mock)
+            </button>
+          </form>
         </div>
-        <div>
-          <label className="block text-sm mb-1">Category</label>
-          <select
-            value={category}
-            onChange={(e) =>
-              setCategory(e.target.value as 'Electronics' | 'Apparel' | 'Home & Garden')
-            }
-            className="w-full rounded border p-2 bg-white dark:bg-gray-900 dark:border-gray-700"
-          >
-            <option>Electronics</option>
-            <option>Apparel</option>
-            <option>Home & Garden</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm mb-1">Description</label>
-          <textarea
-            value={desc}
-            onChange={(e) => setDesc(e.target.value)}
-            className="w-full rounded border p-2 bg-white dark:bg-gray-900 dark:border-gray-700"
-            rows={4}
-          />
-        </div>
-        <button className="rounded border px-3 py-2">Update (mock)</button>
-      </form>
-    </>
+      </div>
+    </div>
   );
 }
