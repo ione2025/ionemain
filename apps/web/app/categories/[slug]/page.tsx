@@ -8,8 +8,9 @@ export function generateStaticParams() {
   return categories.map((c) => ({ slug: c }));
 }
 
-export default function CategoryPage({ params }: { params: { slug: string } }) {
-  const decoded = decodeURIComponent(params.slug);
+export default async function CategoryPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const decoded = decodeURIComponent(slug);
   const filtered = products.filter((p) => p.category === decoded);
 
   return (

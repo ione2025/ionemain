@@ -89,4 +89,5 @@ export function Header() {
         </div>
       </nav>
     </header>
+  );
 }
