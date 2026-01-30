@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
-  // Removed 'output: export' to enable API routes for user persistence
+  output: 'export',
   basePath: '/ionemain',
   images: { unoptimized: true },
   trailingSlash: true,
