@@ -10,7 +10,7 @@ export const products: Product[] = [
     images: [
       'https://picsum.photos/seed/p1/600/400',
       'https://picsum.photos/seed/p1b/600/400',
-      'https://picsum/photos/seed/p1c/600/400',
+      'https://picsum.photos/seed/p1c/600/400',
     ],
     description:
       'Comfortable over-ear wireless headphones with noise cancellation.',
