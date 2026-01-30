@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useCart } from '../../components/CartContext';
 import { products } from '../../data/products';
 
@@ -26,12 +27,12 @@ export default function CartPage() {
           <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-12 text-center">
             <div className="text-6xl mb-4" aria-hidden="true">🛒</div>
             <p className="text-gray-400 text-lg mb-6">Your cart is empty.</p>
-            <a
+            <Link
               href="/products"
               className="inline-block px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all"
             >
               Browse Products
-            </a>
+            </Link>
           </div>
         ) : (
           <>
