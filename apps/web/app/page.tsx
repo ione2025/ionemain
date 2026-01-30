@@ -1,6 +1,9 @@
 import Link from 'next/link';
+import { getTranslations } from 'next-intl/server';
 
-export default function HomePage() {
+export default async function HomePage() {
+  const t = await getTranslations('landing');
+  
   return (
     <main className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-white">
       {/* Hero Section */}
@@ -11,20 +14,19 @@ export default function HomePage() {
         <div className="relative max-w-6xl mx-auto px-6 py-24 md:py-32">
           <div className="text-center max-w-4xl mx-auto">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full text-sm mb-8">
-              <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
-              <span className="text-gray-300">B2B Marketplace Platform</span>
+              <span className="w-2 h-2 bg-green-400 rounded-full motion-safe:animate-pulse" />
+              <span className="text-gray-300">{t('badge')}</span>
             </div>
             
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6">
-              Everything you need for{' '}
+              {t('heroTitle')}{' '}
               <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-                modern commerce
+                {t('heroHighlight')}
               </span>
             </h1>
             
             <p className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-              Connect with buyers and sellers worldwide. A powerful platform for discovering products, 
-              managing listings, and growing your business.
+              {t('heroDescription')}
             </p>
             
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -32,13 +34,13 @@ export default function HomePage() {
                 href="/signup"
                 className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-purple-700 transition-all shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40"
               >
-                Get Started Free →
+                {t('getStarted')}
               </Link>
               <Link
                 href="/products"
                 className="px-8 py-4 bg-white/5 backdrop-blur-sm border border-white/10 text-white font-semibold rounded-xl hover:bg-white/10 transition-all"
               >
-                Browse Products
+                {t('browseProducts')}
               </Link>
             </div>
           </div>
@@ -49,10 +51,10 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Built for modern businesses
+            {t('featuresTitle')}
           </h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
-            Everything you need to buy and sell products efficiently
+            {t('featuresSubtitle')}
           </p>
         </div>
 
@@ -64,16 +66,15 @@ export default function HomePage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
-              <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+              <div className="w-14 h-14 bg-blue-500/10 rounded-xl flex items-center justify-center text-3xl mb-6" aria-hidden="true">
                 🔍
               </div>
-              <h3 className="text-xl font-semibold mb-3">Search Products</h3>
+              <h3 className="text-xl font-semibold mb-3">{t('searchProducts')}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Browse through thousands of products across multiple categories. 
-                Find exactly what you need with powerful search and filters.
+                {t('searchProductsDesc')}
               </p>
               <div className="mt-6 text-blue-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
-                Explore Products →
+                {t('exploreProducts')}
               </div>
             </div>
           </Link>
@@ -85,16 +86,15 @@ export default function HomePage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
-              <div className="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+              <div className="w-14 h-14 bg-purple-500/10 rounded-xl flex items-center justify-center text-3xl mb-6" aria-hidden="true">
                 📦
               </div>
-              <h3 className="text-xl font-semibold mb-3">Seller Dashboard</h3>
+              <h3 className="text-xl font-semibold mb-3">{t('sellerDashboard')}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Manage your product listings, track orders, and grow your business. 
-                Everything you need to succeed as a seller.
+                {t('sellerDashboardDesc')}
               </p>
               <div className="mt-6 text-purple-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
-                Start Selling →
+                {t('startSelling')}
               </div>
             </div>
           </Link>
@@ -106,16 +106,15 @@ export default function HomePage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
-              <div className="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+              <div className="w-14 h-14 bg-pink-500/10 rounded-xl flex items-center justify-center text-3xl mb-6" aria-hidden="true">
                 📁
               </div>
-              <h3 className="text-xl font-semibold mb-3">Categories</h3>
+              <h3 className="text-xl font-semibold mb-3">{t('categoriesTitle')}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Explore products by category. From electronics to apparel, 
-                find the right products organized just for you.
+                {t('categoriesDesc')}
               </p>
               <div className="mt-6 text-pink-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
-                View Categories →
+                {t('viewCategories')}
               </div>
             </div>
           </Link>
@@ -124,17 +123,16 @@ export default function HomePage() {
           <div className="md:col-span-2 relative bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8">
             <div className="flex flex-col md:flex-row gap-8">
               <div className="flex-1">
-                <div className="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+                <div className="w-14 h-14 bg-green-500/10 rounded-xl flex items-center justify-center text-3xl mb-6" aria-hidden="true">
                   💬
                 </div>
-                <h3 className="text-xl font-semibold mb-3">Messaging</h3>
+                <h3 className="text-xl font-semibold mb-3">{t('messaging')}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed">
-                  Connect directly with buyers and sellers. Negotiate deals, 
-                  ask questions, and build lasting business relationships.
+                  {t('messagingDesc')}
                 </p>
                 <div className="mt-6 inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/10 text-yellow-400 text-xs font-medium rounded-full">
-                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full" />
-                  Coming Soon
+                  <span className="w-1.5 h-1.5 bg-yellow-400 rounded-full" aria-hidden="true" />
+                  {t('comingSoon')}
                 </div>
               </div>
               <div className="flex-1 flex items-center justify-center">
@@ -155,16 +153,15 @@ export default function HomePage() {
           >
             <div className="absolute inset-0 bg-gradient-to-br from-orange-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
             <div className="relative">
-              <div className="w-14 h-14 bg-orange-500/10 rounded-xl flex items-center justify-center text-3xl mb-6">
+              <div className="w-14 h-14 bg-orange-500/10 rounded-xl flex items-center justify-center text-3xl mb-6" aria-hidden="true">
                 🛒
               </div>
-              <h3 className="text-xl font-semibold mb-3">Shopping Cart</h3>
+              <h3 className="text-xl font-semibold mb-3">{t('shoppingCart')}</h3>
               <p className="text-gray-400 text-sm leading-relaxed">
-                Add products to your cart and checkout when ready. 
-                Secure and seamless shopping experience.
+                {t('shoppingCartDesc')}
               </p>
               <div className="mt-6 text-orange-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
-                View Cart →
+                {t('viewCart')}
               </div>
             </div>
           </Link>
@@ -177,23 +174,23 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 opacity-5" />
           <div className="relative">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Ready to get started?
+              {t('ctaTitle')}
             </h2>
             <p className="text-gray-400 mb-8 max-w-xl mx-auto">
-              Join thousands of businesses already using ionecenter to connect, trade, and grow.
+              {t('ctaDescription')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/signup"
                 className="px-8 py-4 bg-white text-gray-900 font-semibold rounded-xl hover:bg-gray-100 transition-all"
               >
-                Create Free Account
+                {t('createAccount')}
               </Link>
               <Link
                 href="/login"
                 className="px-8 py-4 text-white font-semibold hover:text-gray-300 transition-all"
               >
-                Already have an account? Sign in
+                {t('alreadyHaveAccount')}
               </Link>
             </div>
           </div>

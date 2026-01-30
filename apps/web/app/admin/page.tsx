@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth, User } from '../../contexts/AuthContext';
+import { STORAGE_KEYS } from '../../constants/storage';
 
 export default function AdminPage() {
   const { user, isLoading } = useAuth();
@@ -24,7 +25,7 @@ export default function AdminPage() {
   useEffect(() => {
     const loadUsers = () => {
       try {
-        const usersRaw = localStorage.getItem('ionecenter_users');
+        const usersRaw = localStorage.getItem(STORAGE_KEYS.USERS);
         const allUsers = usersRaw ? JSON.parse(usersRaw) : [];
         setUsers(allUsers);
         setStats({
@@ -32,20 +33,23 @@ export default function AdminPage() {
           buyers: allUsers.filter((u: User) => u.role === 'buyer').length,
           sellers: allUsers.filter((u: User) => u.role === 'seller').length,
         });
-      } catch {
-        // Ignore errors
+      } catch (error) {
+        console.error('Error loading users:', error);
       }
     };
     loadUsers();
   }, []);
 
-  const handleDeleteUser = (userId: string) => {
+  const handleDeleteUser = (userId: string, userName: string) => {
     if (userId === user?.id) {
       alert('You cannot delete your own account');
       return;
     }
+    if (!confirm(`Are you sure you want to delete "${userName}"? This action cannot be undone.`)) {
+      return;
+    }
     const updatedUsers = users.filter((u) => u.id !== userId);
-    localStorage.setItem('ionecenter_users', JSON.stringify(updatedUsers));
+    localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(updatedUsers));
     setUsers(updatedUsers);
     setStats({
       totalUsers: updatedUsers.length,
@@ -86,7 +90,7 @@ export default function AdminPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-2xl">
+              <div className="w-12 h-12 bg-blue-500/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
                 👥
               </div>
               <div>
@@ -97,7 +101,7 @@ export default function AdminPage() {
           </div>
           <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-2xl">
+              <div className="w-12 h-12 bg-green-500/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
                 🛒
               </div>
               <div>
@@ -108,7 +112,7 @@ export default function AdminPage() {
           </div>
           <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-6">
             <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-2xl">
+              <div className="w-12 h-12 bg-purple-500/10 rounded-xl flex items-center justify-center text-2xl" aria-hidden="true">
                 📦
               </div>
               <div>
@@ -162,7 +166,7 @@ export default function AdminPage() {
                     <td className="px-6 py-4">
                       {u.id !== user.id && (
                         <button
-                          onClick={() => handleDeleteUser(u.id)}
+                          onClick={() => handleDeleteUser(u.id, u.name)}
                           className="text-red-400 hover:text-red-300 text-sm"
                         >
                           Delete

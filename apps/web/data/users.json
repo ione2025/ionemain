@@ -1,0 +1,12 @@
+{
+  "users": [
+    {
+      "id": "admin-1",
+      "name": "Admin",
+      "email": "admin@ionecenter.com",
+      "role": "admin",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "lastUpdated": "2026-01-01T00:00:00.000Z"
+}

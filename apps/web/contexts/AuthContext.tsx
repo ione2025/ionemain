@@ -1,6 +1,7 @@
 'use client';
 
 import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { STORAGE_KEYS } from '../constants/storage';
 
 export type UserRole = 'buyer' | 'seller' | 'admin';
 
@@ -17,11 +18,13 @@ type AuthContextValue = {
   login: (email: string, password: string) => Promise<boolean>;
   signup: (name: string, email: string, password: string, role: UserRole) => Promise<boolean>;
   logout: () => void;
+  updateUser: (updates: Partial<User>) => void;
 };
 
 const AuthContext = createContext<AuthContextValue | null>(null);
-const AUTH_KEY = 'ionecenter_auth';
-const USERS_KEY = 'ionecenter_users';
+
+// NOTE: This is a demo implementation using localStorage for simplicity.
+// In production, use a proper backend with secure authentication.
 
 // Default admin account
 const DEFAULT_ADMIN: User = {
@@ -37,26 +40,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     try {
-      const savedUser = localStorage.getItem(AUTH_KEY);
+      const savedUser = localStorage.getItem(STORAGE_KEYS.AUTH);
       if (savedUser) {
         setUser(JSON.parse(savedUser));
       }
       // Initialize default admin if no users exist
-      const users = localStorage.getItem(USERS_KEY);
+      const users = localStorage.getItem(STORAGE_KEYS.USERS);
       if (!users) {
-        localStorage.setItem(USERS_KEY, JSON.stringify([
+        localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify([
           { ...DEFAULT_ADMIN, password: 'admin123' }
         ]));
       }
-    } catch {
-      // Ignore errors
+    } catch (error) {
+      console.error('Error loading auth state:', error);
     }
     setIsLoading(false);
   }, []);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      const usersRaw = localStorage.getItem(USERS_KEY);
+      const usersRaw = localStorage.getItem(STORAGE_KEYS.USERS);
       const users = usersRaw ? JSON.parse(usersRaw) : [];
       const foundUser = users.find(
         (u: { email: string; password: string }) => 
@@ -65,11 +68,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       if (foundUser) {
         const { password: _, ...userWithoutPassword } = foundUser;
         setUser(userWithoutPassword);
-        localStorage.setItem(AUTH_KEY, JSON.stringify(userWithoutPassword));
+        localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(userWithoutPassword));
         return true;
       }
       return false;
-    } catch {
+    } catch (error) {
+      console.error('Error during login:', error);
       return false;
     }
   };
@@ -81,7 +85,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     role: UserRole
   ): Promise<boolean> => {
     try {
-      const usersRaw = localStorage.getItem(USERS_KEY);
+      const usersRaw = localStorage.getItem(STORAGE_KEYS.USERS);
       const users = usersRaw ? JSON.parse(usersRaw) : [];
       
       // Check if email already exists
@@ -98,24 +102,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       };
       
       users.push(newUser);
-      localStorage.setItem(USERS_KEY, JSON.stringify(users));
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
       
       const { password: _, ...userWithoutPassword } = newUser;
       setUser(userWithoutPassword);
-      localStorage.setItem(AUTH_KEY, JSON.stringify(userWithoutPassword));
+      localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(userWithoutPassword));
       return true;
-    } catch {
+    } catch (error) {
+      console.error('Error during signup:', error);
       return false;
     }
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem(AUTH_KEY);
+    localStorage.removeItem(STORAGE_KEYS.AUTH);
+  };
+
+  const updateUser = (updates: Partial<User>) => {
+    if (!user) return;
+    const updatedUser = { ...user, ...updates };
+    setUser(updatedUser);
+    localStorage.setItem(STORAGE_KEYS.AUTH, JSON.stringify(updatedUser));
   };
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, signup, logout }}>
+    <AuthContext.Provider value={{ user, isLoading, login, signup, logout, updateUser }}>
       {children}
     </AuthContext.Provider>
   );
