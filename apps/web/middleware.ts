@@ -1,22 +1,19 @@
-import createMiddleware from 'next-intl/middleware';
+import { NextRequest, NextResponse } from 'next/server';
 
-export default createMiddleware({
-  // A list of all locales that are supported
-  locales: ['en', 'ar', 'zh'],
-
-  // Used when no locale matches
-  defaultLocale: 'en',
-
-  // Don't use locale prefix in URL
-  localePrefix: 'never',
-
-  // Detect locale from cookie
-  localeDetection: true,
-});
+// Simple middleware that sets locale from cookie - no redirects
+export function middleware(request: NextRequest) {
+  const locale = request.cookies.get('NEXT_LOCALE')?.value || 'en';
+  const response = NextResponse.next();
+  
+  // If locale cookie doesn't exist, set default
+  if (!request.cookies.has('NEXT_LOCALE')) {
+    response.cookies.set('NEXT_LOCALE', locale, { maxAge: 31536000 });
+  }
+  
+  return response;
+}
 
 export const config = {
-  // Match all pathnames except for
-  // - files (e.g. _next/static, favicon.ico)
-  // - api routes
-  matcher: ['/((?!api|_next|.*\\..*).*)'],
+  // Match pathnames that need locale handling - exclude API and static files
+  matcher: ['/((?!api|_next|.*\\..*).*)', '/'],
 };
