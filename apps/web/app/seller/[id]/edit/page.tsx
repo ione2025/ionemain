@@ -8,9 +8,5 @@ export function generateStaticParams() {
 export default async function SellerEditProduct({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
 
-  return (
-    <main className="max-w-3xl mx-auto p-6">
-      <SellerEditForm id={id} />
-    </main>
-  );
+  return <SellerEditForm id={id} />;
 }

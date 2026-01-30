@@ -14,17 +14,24 @@ export default async function CategoryPage({ params }: { params: Promise<{ slug:
   const filtered = products.filter((p) => p.category === decoded);
 
   return (
-    <main className="max-w-6xl mx-auto p-6">
-      <h1 className="text-2xl font-bold mb-4">{decoded}</h1>
-      {filtered.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-400">No products found.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {filtered.map((p) => (
-            <ProductCard key={p.id} product={p} />
-          ))}
+    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white">
+      <div className="max-w-6xl mx-auto px-6 py-8">
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold mb-2">{decoded}</h1>
+          <p className="text-gray-400">Products in this category</p>
         </div>
-      )}
+        {filtered.length === 0 ? (
+          <div className="bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 text-center">
+            <p className="text-gray-400">No products found in this category.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {filtered.map((p) => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        )}
+      </div>
     </main>
   );
 }
