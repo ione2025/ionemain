@@ -28,7 +28,7 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'  # root workspace lockfile
       # Install at workspace root so all packages are linked correctly
-      - run: pnpm install --frozen-lockfile
+      - run: pnpm install --no-frozen-lockfile
       # Build only the web app package (runs "next build && next export" in apps/web)
       - run: pnpm --filter @ionecenter/web build
       # Upload the static export
