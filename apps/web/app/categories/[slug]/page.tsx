@@ -1,6 +1,13 @@
 import { products } from '../../../data/products';
 import { ProductCard } from '../../../components/ProductCard';
 
+export function generateStaticParams() {
+  const categories = Array.from(
+    new Set(products.map((p) => p.category).filter(Boolean))
+  ) as string[];
+  return categories.map((c) => ({ slug: c }));
+}
+
 export default function CategoryPage({ params }: { params: { slug: string } }) {
   const decoded = decodeURIComponent(params.slug);
   const filtered = products.filter((p) => p.category === decoded);
