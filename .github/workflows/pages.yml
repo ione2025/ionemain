@@ -2,7 +2,7 @@ name: Deploy GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [mainwebsite]
   workflow_dispatch:
 
 permissions:
@@ -29,7 +29,7 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-          cache-dependency-path: 'pnpm-lock.yaml'  # Root lockfile (workspace)
+          cache-dependency-path: 'pnpm-lock.yaml'  # root workspace lockfile
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - uses: actions/upload-pages-artifact@v3
