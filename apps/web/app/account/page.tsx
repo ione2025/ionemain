@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { SidebarLayout } from '../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 
 export default function AccountPage() {
@@ -75,7 +75,7 @@ export default function AccountPage() {
   ];
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('title')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('title')}>
       <div className="max-w-4xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{t('title')}</h1>
@@ -208,6 +208,6 @@ export default function AccountPage() {
           </div>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

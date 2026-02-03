@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { orders as mockOrders } from '../../../data/orders';
-import { SidebarLayout } from '../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 import { useCurrency } from '../../../contexts/CurrencyContext';
 import { useAuth } from '../../../contexts/AuthContext';
@@ -80,7 +80,7 @@ export default function SellerOrdersPage() {
   };
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
@@ -164,6 +164,6 @@ export default function SellerOrdersPage() {
           </div>
         )}
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

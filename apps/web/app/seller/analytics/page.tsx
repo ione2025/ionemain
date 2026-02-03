@@ -1,6 +1,6 @@
 'use client';
 
-import { SidebarLayout } from '../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 
 export default function SellerAnalyticsPage() {
@@ -14,7 +14,7 @@ export default function SellerAnalyticsPage() {
   ];
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">Analytics</h1>
@@ -31,6 +31,6 @@ export default function SellerAnalyticsPage() {
           </p>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

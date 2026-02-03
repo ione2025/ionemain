@@ -5,7 +5,7 @@ import { useRouter, useParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuth } from '../../../../contexts/AuthContext';
 import { useCurrency } from '../../../../contexts/CurrencyContext';
-import { SidebarLayout } from '../../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 import { orders } from '../../../../data/orders';
 
@@ -39,7 +39,7 @@ export default function OrderDetailPage() {
 
   if (!order) {
     return (
-      <SidebarLayout
+      <SidebarLayoutWithHeader
         sidebarItems={[
           { href: '/account', label: 'Profile', icon: '👤', translationKey: 'profile' },
           { href: '/account/orders', label: 'Orders', icon: '📦', translationKey: 'orders' },
@@ -59,7 +59,7 @@ export default function OrderDetailPage() {
             </Link>
           </div>
         </div>
-      </SidebarLayout>
+      </SidebarLayoutWithHeader>
     );
   }
 
@@ -88,7 +88,7 @@ export default function OrderDetailPage() {
   };
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={tCommon('appName')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={tCommon('appName')}>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">
           <Link
@@ -212,6 +212,6 @@ export default function OrderDetailPage() {
           </div>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

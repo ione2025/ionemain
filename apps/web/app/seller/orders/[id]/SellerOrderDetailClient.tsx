@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { SidebarLayout } from '../../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 import { useCurrency } from '../../../../contexts/CurrencyContext';
 import { orders } from '../../../../data/orders';
@@ -24,7 +24,7 @@ export default function SellerOrderDetailPage() {
 
   if (!order) {
     return (
-      <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+      <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
         <div className="max-w-6xl mx-auto px-4 py-8">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Order not found</h1>
@@ -36,7 +36,7 @@ export default function SellerOrderDetailPage() {
             </Link>
           </div>
         </div>
-      </SidebarLayout>
+      </SidebarLayoutWithHeader>
     );
   }
 
@@ -58,7 +58,7 @@ export default function SellerOrderDetailPage() {
   };
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">
           <Link
@@ -197,6 +197,6 @@ export default function SellerOrderDetailPage() {
           </div>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }
