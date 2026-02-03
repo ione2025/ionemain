@@ -129,6 +129,16 @@ export async function uploadProductImage(
   }
 }
 
+// Excel column mapping for better maintainability
+const EXCEL_COLUMNS = {
+  MODEL_NUMBER: 0,
+  NAME: 1,
+  DESCRIPTION: 2,
+  PRICE: 3,
+  CATEGORY: 4,
+  IMAGE_PATH: 5,
+} as const;
+
 /**
  * Parse Excel data to product upload format
  * @param data - Raw Excel data (array of arrays)
@@ -142,15 +152,22 @@ export function parseExcelToProducts(data: unknown[][]): ProductUploadData[] {
     const row = data[i];
     
     // Skip empty rows
-    if (!row || row.length === 0 || !row[0]) continue;
+    if (!row || row.length === 0 || !row[EXCEL_COLUMNS.MODEL_NUMBER]) continue;
 
     const product: ProductUploadData = {
-      modelNumber: String(row[0] ?? '').trim(),
-      name: String(row[1] ?? '').trim(),
-      description: String(row[2] ?? '').trim(),
-      price: typeof row[3] === 'number' ? row[3] : parseFloat(String(row[3] ?? 0)) || 0,
-      category: String(row[4] ?? 'Uncategorized').trim(),
-      imagePath: row[5] ? String(row[5]).trim() : undefined,
+      modelNumber: String(row[EXCEL_COLUMNS.MODEL_NUMBER] ?? '').trim(),
+      name: String(row[EXCEL_COLUMNS.NAME] ?? '').trim(),
+      description: String(row[EXCEL_COLUMNS.DESCRIPTION] ?? '').trim(),
+      price: (() => {
+        const priceValue = row[EXCEL_COLUMNS.PRICE];
+        return typeof priceValue === 'number' 
+          ? priceValue 
+          : parseFloat(String(priceValue ?? 0)) || 0;
+      })(),
+      category: String(row[EXCEL_COLUMNS.CATEGORY] ?? 'Uncategorized').trim(),
+      imagePath: row[EXCEL_COLUMNS.IMAGE_PATH] 
+        ? String(row[EXCEL_COLUMNS.IMAGE_PATH]).trim() 
+        : undefined,
     };
 
     // Validate required fields

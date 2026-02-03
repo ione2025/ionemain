@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '../contexts/AuthContext';
 import * as XLSX from 'xlsx';
@@ -13,6 +13,7 @@ export function BulkUploadComponent() {
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [progress, setProgress] = useState<string>('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const downloadTemplate = () => {
     // Create sample Excel template
@@ -84,9 +85,10 @@ export function BulkUploadComponent() {
           text: `${t('uploadSuccess')}: ${result.productsAdded} ${t('productsAdded')}`,
         });
         setFile(null);
-        // Reset file input
-        const fileInput = document.getElementById('file-upload') as HTMLInputElement;
-        if (fileInput) fileInput.value = '';
+        // Reset file input using ref
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
       } else {
         setMessage({
           type: 'error',
@@ -140,6 +142,7 @@ export function BulkUploadComponent() {
             {t('selectFile')}
           </label>
           <input
+            ref={fileInputRef}
             id="file-upload"
             type="file"
             accept=".xlsx,.xls"

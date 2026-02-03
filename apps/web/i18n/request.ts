@@ -20,14 +20,21 @@ export function isRTL(locale: Locale): boolean {
 }
 
 export default getRequestConfig(async () => {
-  // Read locale from cookies
-  const cookieStore = await cookies();
-  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale | undefined;
+  // Read locale from cookies with error handling
+  let locale: Locale = defaultLocale;
   
-  // Validate and use cookie locale, fallback to default
-  const locale = localeCookie && locales.includes(localeCookie) 
-    ? localeCookie 
-    : defaultLocale;
+  try {
+    const cookieStore = await cookies();
+    const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale | undefined;
+    
+    // Validate and use cookie locale, fallback to default
+    if (localeCookie && locales.includes(localeCookie)) {
+      locale = localeCookie;
+    }
+  } catch (error) {
+    // Fallback to default locale if cookie reading fails
+    console.warn('Failed to read locale from cookies, using default:', error);
+  }
 
   return {
     locale,

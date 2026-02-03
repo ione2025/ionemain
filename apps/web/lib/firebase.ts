@@ -27,8 +27,18 @@ let app: FirebaseApp;
 let db: Firestore;
 let storage: FirebaseStorage;
 
-// Check if all required config values are present
-const isConfigValid = Object.values(firebaseConfig).every(value => value !== '');
+// Check if all required config values are present and not undefined
+const isConfigValid = Object.entries(firebaseConfig).every(
+  ([, value]) => value !== '' && value !== undefined
+);
+
+if (!isConfigValid) {
+  const missingVars = Object.entries(firebaseConfig)
+    .filter(([, value]) => !value)
+    .map(([key]) => `NEXT_PUBLIC_${key.replace(/([A-Z])/g, '_$1').toUpperCase()}`)
+    .join(', ');
+  console.warn(`Firebase configuration is incomplete. Missing: ${missingVars}. Using mock data.`);
+}
 
 if (isConfigValid) {
   // Initialize Firebase only if config is valid
