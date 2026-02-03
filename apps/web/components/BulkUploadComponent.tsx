@@ -3,7 +3,7 @@
 import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '../contexts/AuthContext';
-import * as XLSX from 'xlsx';
+import ExcelJS from 'exceljs';
 import { bulkUploadProducts, parseExcelToProducts } from '../lib/products';
 
 export function BulkUploadComponent() {
@@ -15,20 +15,58 @@ export function BulkUploadComponent() {
   const [progress, setProgress] = useState<string>('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const downloadTemplate = () => {
-    // Create sample Excel template
-    const templateData = [
-      ['Model Number', 'Product Name', 'Description', 'Price', 'Category', 'Image Path'],
-      ['MOD-001', 'Sample Product 1', 'This is a sample product description', 99.99, 'Electronics', '/path/to/image1.jpg'],
-      ['MOD-002', 'Sample Product 2', 'Another product description', 149.99, 'Fashion', '/path/to/image2.jpg'],
+  const downloadTemplate = async () => {
+    // Create sample Excel template using ExcelJS
+    const workbook = new ExcelJS.Workbook();
+    const worksheet = workbook.addWorksheet('Products');
+
+    // Add header row
+    worksheet.columns = [
+      { header: 'Model Number', key: 'modelNumber', width: 15 },
+      { header: 'Product Name', key: 'name', width: 30 },
+      { header: 'Description', key: 'description', width: 50 },
+      { header: 'Price', key: 'price', width: 10 },
+      { header: 'Category', key: 'category', width: 15 },
+      { header: 'Image Path', key: 'imagePath', width: 30 },
     ];
 
-    const ws = XLSX.utils.aoa_to_sheet(templateData);
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, 'Products');
+    // Add sample data
+    worksheet.addRow({
+      modelNumber: 'MOD-001',
+      name: 'Sample Product 1',
+      description: 'This is a sample product description',
+      price: 99.99,
+      category: 'Electronics',
+      imagePath: '/path/to/image1.jpg',
+    });
+    worksheet.addRow({
+      modelNumber: 'MOD-002',
+      name: 'Sample Product 2',
+      description: 'Another product description',
+      price: 149.99,
+      category: 'Fashion',
+      imagePath: '/path/to/image2.jpg',
+    });
 
-    // Download the file
-    XLSX.writeFile(wb, 'product_upload_template.xlsx');
+    // Style the header row
+    worksheet.getRow(1).font = { bold: true };
+    worksheet.getRow(1).fill = {
+      type: 'pattern',
+      pattern: 'solid',
+      fgColor: { argb: 'FFE0E0E0' },
+    };
+
+    // Generate and download the file
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+    });
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'product_upload_template.xlsx';
+    link.click();
+    window.URL.revokeObjectURL(url);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,12 +96,22 @@ export function BulkUploadComponent() {
     setProgress(t('processingProducts'));
 
     try {
-      // Read the Excel file
-      const data = await file.arrayBuffer();
-      const workbook = XLSX.read(data);
-      const sheetName = workbook.SheetNames[0];
-      const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as unknown[][];
+      // Read the Excel file using ExcelJS
+      const arrayBuffer = await file.arrayBuffer();
+      const workbook = new ExcelJS.Workbook();
+      await workbook.xlsx.load(arrayBuffer);
+
+      const worksheet = workbook.worksheets[0];
+      const jsonData: unknown[][] = [];
+
+      // Convert worksheet to array format
+      worksheet.eachRow((row, rowNumber) => {
+        const rowData: unknown[] = [];
+        row.eachCell({ includeEmpty: true }, (cell) => {
+          rowData.push(cell.value);
+        });
+        jsonData.push(rowData);
+      });
 
       // Parse the data
       const products = parseExcelToProducts(jsonData);
