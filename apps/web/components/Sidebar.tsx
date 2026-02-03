@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { useLocale } from '../contexts/LocaleContext';
 import { ReactNode } from 'react';
+import { MinimalHeader } from './MinimalHeader';
 
 export type SidebarItem = {
   href: string;
@@ -71,5 +72,27 @@ export function SidebarLayout({ children, sidebarItems, sidebarTitle }: SidebarL
         {children}
       </div>
     </div>
+  );
+}
+
+type SidebarLayoutWithHeaderProps = {
+  children: ReactNode;
+  sidebarItems: SidebarItem[];
+  sidebarTitle?: string;
+};
+
+export function SidebarLayoutWithHeader({ children, sidebarItems, sidebarTitle }: SidebarLayoutWithHeaderProps) {
+  const { isRTL } = useLocale();
+
+  return (
+    <>
+      <MinimalHeader />
+      <div className={`flex min-h-screen ${isRTL ? 'flex-row-reverse' : ''}`}>
+        <Sidebar items={sidebarItems} title={sidebarTitle} />
+        <div className="flex-1 bg-gray-50 dark:bg-gray-950">
+          {children}
+        </div>
+      </div>
+    </>
   );
 }

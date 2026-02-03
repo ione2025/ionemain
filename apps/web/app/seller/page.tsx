@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { products } from '../../data/products';
-import { SidebarLayout } from '../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 
 export default function SellerDashboard() {
@@ -16,7 +16,7 @@ export default function SellerDashboard() {
   ];
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -87,6 +87,6 @@ export default function SellerDashboard() {
           </div>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

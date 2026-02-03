@@ -4,15 +4,25 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { Invoice } from '../../../../../components/Invoice';
 import { orders } from '../../../../../data/orders';
+import { SidebarLayoutWithHeader } from '../../../../../components/Sidebar';
+import { useTranslations } from 'next-intl';
 
 export default function SellerInvoicePage() {
   const params = useParams();
+  const t = useTranslations('landing');
 
   const order = orders.find((o) => o.id === params.id);
 
+  const sidebarItems = [
+    { href: '/seller', label: 'Dashboard', icon: '📊', translationKey: 'dashboard' },
+    { href: '/seller/products', label: 'Products', icon: '📦', translationKey: 'products' },
+    { href: '/seller/orders', label: 'Orders', icon: '🛒', translationKey: 'orders' },
+    { href: '/seller/analytics', label: 'Analytics', icon: '📈', translationKey: 'analytics' },
+  ];
+
   if (!order) {
     return (
-      <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
+      <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
         <div className="max-w-4xl mx-auto px-4 py-8 text-center">
           <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Order not found</h1>
           <Link
@@ -22,14 +32,14 @@ export default function SellerInvoicePage() {
             ← Back to orders
           </Link>
         </div>
-      </main>
+      </SidebarLayoutWithHeader>
     );
   }
 
   return (
-    <main className="min-h-screen bg-gray-50 dark:bg-gray-950">
-      <div className="no-print py-4 px-4 border-b border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
-        <div className="max-w-4xl mx-auto">
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+      <div className="py-8 px-4">
+        <div className="no-print mb-4">
           <Link
             href={`/seller/orders/${order.id}`}
             className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:underline"
@@ -37,10 +47,8 @@ export default function SellerInvoicePage() {
             ← Back to order details
           </Link>
         </div>
-      </div>
-      <div className="py-8">
         <Invoice order={order} />
       </div>
-    </main>
+    </SidebarLayoutWithHeader>
   );
 }

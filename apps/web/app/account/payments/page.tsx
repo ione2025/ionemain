@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import { useAuth } from '../../../contexts/AuthContext';
-import { SidebarLayout } from '../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../components/Sidebar';
 import { useTranslations } from 'next-intl';
 
 export default function PaymentsPage() {
@@ -37,7 +37,7 @@ export default function PaymentsPage() {
   ];
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={tCommon('appName')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={tCommon('appName')}>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Payment Methods</h1>
@@ -54,6 +54,6 @@ export default function PaymentsPage() {
           </p>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { products } from '../../../data/products';
-import { SidebarLayout } from '../../../components/Sidebar';
+import { SidebarLayoutWithHeader } from '../../../components/Sidebar';
 import { BulkUploadComponent } from '../../../components/BulkUploadComponent';
 import { useTranslations } from 'next-intl';
 
@@ -20,7 +20,7 @@ export default function SellerProductsPage() {
   ];
 
   return (
-    <SidebarLayout sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
+    <SidebarLayoutWithHeader sidebarItems={sidebarItems} sidebarTitle={t('sellerDashboard')}>
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -114,6 +114,6 @@ export default function SellerProductsPage() {
           </div>
         </div>
       </div>
-    </SidebarLayout>
+    </SidebarLayoutWithHeader>
   );
 }
