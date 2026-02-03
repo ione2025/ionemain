@@ -156,5 +156,46 @@
     "status_paid": "مدفوع",
     "status_unpaid": "غير مدفوع",
     "status_overdue": "متأخر"
+  },
+  "seller": {
+    "dashboard": "لوحة البائع",
+    "products": "المنتجات",
+    "orders": "الطلبات",
+    "analytics": "التحليلات",
+    "addProduct": "إضافة منتج",
+    "bulkUpload": "رفع مجمع",
+    "uploadExcel": "رفع ملف Excel",
+    "downloadTemplate": "تحميل النموذج",
+    "manageProducts": "إدارة منتجاتك",
+    "manageOrders": "إدارة طلبات العملاء",
+    "noProducts": "لا توجد منتجات بعد",
+    "uploadInstructions": "قم برفع ملف Excel يحتوي على تفاصيل المنتجات بما في ذلك أرقام الموديلات ومسارات الصور",
+    "selectFile": "اختر ملف",
+    "upload": "رفع",
+    "uploading": "جاري الرفع...",
+    "uploadSuccess": "تم رفع المنتجات بنجاح",
+    "uploadError": "خطأ في رفع المنتجات",
+    "excelFormat": "تنسيق ملف Excel: رقم الموديل، اسم المنتج، الوصف، السعر، الفئة، مسار الصورة",
+    "processingProducts": "جاري معالجة المنتجات...",
+    "productsAdded": "تمت إضافة المنتجات"
+  },
+  "products": {
+    "title": "المنتجات",
+    "search": "البحث عن المنتجات...",
+    "category": "الفئة",
+    "allCategories": "جميع الفئات",
+    "price": "السعر",
+    "addToCart": "أضف إلى السلة",
+    "viewDetails": "عرض التفاصيل",
+    "noProducts": "لم يتم العثور على منتجات",
+    "sortBy": "ترتيب حسب",
+    "newest": "الأحدث",
+    "priceLowest": "السعر: من الأقل للأعلى",
+    "priceHighest": "السعر: من الأعلى للأقل"
+  },
+  "categories": {
+    "title": "الفئات",
+    "subtitle": "تصفح المنتجات حسب الفئة",
+    "viewProducts": "عرض المنتجات"
   }
 }

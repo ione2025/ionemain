@@ -156,5 +156,46 @@
     "status_paid": "Paid",
     "status_unpaid": "Unpaid",
     "status_overdue": "Overdue"
+  },
+  "seller": {
+    "dashboard": "Seller Dashboard",
+    "products": "Products",
+    "orders": "Orders",
+    "analytics": "Analytics",
+    "addProduct": "Add Product",
+    "bulkUpload": "Bulk Upload",
+    "uploadExcel": "Upload Excel File",
+    "downloadTemplate": "Download Template",
+    "manageProducts": "Manage your products",
+    "manageOrders": "Manage customer orders",
+    "noProducts": "No products yet",
+    "uploadInstructions": "Upload an Excel file with product details including model numbers and image paths",
+    "selectFile": "Select File",
+    "upload": "Upload",
+    "uploading": "Uploading...",
+    "uploadSuccess": "Products uploaded successfully",
+    "uploadError": "Error uploading products",
+    "excelFormat": "Excel file format: Model Number, Product Name, Description, Price, Category, Image Path",
+    "processingProducts": "Processing products...",
+    "productsAdded": "products added"
+  },
+  "products": {
+    "title": "Products",
+    "search": "Search products...",
+    "category": "Category",
+    "allCategories": "All Categories",
+    "price": "Price",
+    "addToCart": "Add to Cart",
+    "viewDetails": "View Details",
+    "noProducts": "No products found",
+    "sortBy": "Sort By",
+    "newest": "Newest",
+    "priceLowest": "Price: Low to High",
+    "priceHighest": "Price: High to Low"
+  },
+  "categories": {
+    "title": "Categories",
+    "subtitle": "Browse products by category",
+    "viewProducts": "View products"
   }
 }

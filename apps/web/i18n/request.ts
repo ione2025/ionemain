@@ -1,4 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
+import { cookies } from 'next/headers';
 
 export const locales = ['en', 'ar', 'zh'] as const;
 export type Locale = (typeof locales)[number];
@@ -19,8 +20,14 @@ export function isRTL(locale: Locale): boolean {
 }
 
 export default getRequestConfig(async () => {
-  // For static export, use default locale only
-  const locale = defaultLocale;
+  // Read locale from cookies
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get('NEXT_LOCALE')?.value as Locale | undefined;
+  
+  // Validate and use cookie locale, fallback to default
+  const locale = localeCookie && locales.includes(localeCookie) 
+    ? localeCookie 
+    : defaultLocale;
 
   return {
     locale,
