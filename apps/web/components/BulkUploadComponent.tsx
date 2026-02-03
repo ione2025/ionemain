@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useAuth } from '../contexts/AuthContext';
 import * as XLSX from 'xlsx';
-import { bulkUploadProducts, parseExcelToProducts, ProductUploadData } from '../lib/products';
+import { bulkUploadProducts, parseExcelToProducts } from '../lib/products';
 
 export function BulkUploadComponent() {
   const t = useTranslations('seller');
@@ -62,7 +62,7 @@ export function BulkUploadComponent() {
       const workbook = XLSX.read(data);
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 }) as unknown[][];
 
       // Parse the data
       const products = parseExcelToProducts(jsonData);

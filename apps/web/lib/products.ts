@@ -131,10 +131,10 @@ export async function uploadProductImage(
 
 /**
  * Parse Excel data to product upload format
- * @param data - Raw Excel data
+ * @param data - Raw Excel data (array of arrays)
  * @returns Array of product upload data
  */
-export function parseExcelToProducts(data: any[]): ProductUploadData[] {
+export function parseExcelToProducts(data: unknown[][]): ProductUploadData[] {
   const products: ProductUploadData[] = [];
 
   // Skip header row
@@ -145,11 +145,11 @@ export function parseExcelToProducts(data: any[]): ProductUploadData[] {
     if (!row || row.length === 0 || !row[0]) continue;
 
     const product: ProductUploadData = {
-      modelNumber: String(row[0] || '').trim(),
-      name: String(row[1] || '').trim(),
-      description: String(row[2] || '').trim(),
-      price: parseFloat(row[3]) || 0,
-      category: String(row[4] || 'Uncategorized').trim(),
+      modelNumber: String(row[0] ?? '').trim(),
+      name: String(row[1] ?? '').trim(),
+      description: String(row[2] ?? '').trim(),
+      price: typeof row[3] === 'number' ? row[3] : parseFloat(String(row[3] ?? 0)) || 0,
+      category: String(row[4] ?? 'Uncategorized').trim(),
       imagePath: row[5] ? String(row[5]).trim() : undefined,
     };
 
