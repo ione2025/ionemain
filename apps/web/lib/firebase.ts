@@ -22,14 +22,14 @@ const firebaseConfig: FirebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '',
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
-  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || undefined,
 };
 
 // Initialize Firebase (singleton pattern)
 let app: FirebaseApp;
 let db: Firestore;
 let storage: FirebaseStorage;
-let analytics: Analytics;
+let analytics: Analytics | undefined;
 
 // Check if all required config values are present and not undefined
 // Note: measurementId is optional for Firebase Analytics
