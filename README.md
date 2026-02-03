@@ -57,6 +57,7 @@ packages/
    NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=your_storage_bucket
    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
    NEXT_PUBLIC_FIREBASE_APP_ID=your_app_id
+   NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=your_measurement_id  # Optional, for Firebase Analytics
    ```
 
 3. **Run development server**:
@@ -212,6 +213,7 @@ The guide covers:
 - `NEXT_PUBLIC_FIREBASE_APP_ID` - Firebase app ID
 
 ### Optional Variables
+- `NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID` - Firebase Analytics measurement ID
 - `ALIBABA_APP_KEY` - For 1688.com integration
 - `ALIBABA_APP_SECRET` - For 1688.com integration
 - `ALIBABA_ACCESS_TOKEN` - For 1688.com integration
