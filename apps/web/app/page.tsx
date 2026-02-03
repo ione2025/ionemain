@@ -1,8 +1,15 @@
 import Link from 'next/link';
 import { getTranslations } from 'next-intl/server';
+import { products } from '../data/products';
 
 export default async function HomePage() {
   const t = await getTranslations('landing');
+  const tCategories = await getTranslations('categories');
+  
+  // Extract unique categories from products
+  const categories = Array.from(
+    new Set(products.map((p) => p.category).filter(Boolean))
+  ) as string[];
   
   return (
     <main className="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 min-h-screen text-white">
@@ -47,7 +54,35 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Features Section - Bento Grid */}
+      {/* Categories Section - Prominently displayed */}
+      <section className="max-w-6xl mx-auto px-6 py-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            {tCategories('title')}
+          </h2>
+          <p className="text-gray-400 max-w-2xl mx-auto">
+            {tCategories('subtitle')}
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {categories.map((category) => (
+            <Link
+              key={category}
+              href={`/categories/${encodeURIComponent(category)}`}
+              className="group relative bg-gray-800/50 backdrop-blur-xl border border-gray-700/50 rounded-2xl p-8 hover:border-pink-500/50 transition-all shadow-lg"
+            >
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/10 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="relative">
+                <h3 className="text-xl font-semibold text-white mb-3">{category}</h3>
+                <div className="text-pink-400 text-sm font-medium group-hover:translate-x-1 transition-transform">
+                  {tCategories('viewProducts')} →
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </section>
       <section className="max-w-6xl mx-auto px-6 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">

@@ -156,5 +156,46 @@
     "status_paid": "已付款",
     "status_unpaid": "未付款",
     "status_overdue": "逾期"
+  },
+  "seller": {
+    "dashboard": "卖家中心",
+    "products": "产品",
+    "orders": "订单",
+    "analytics": "分析",
+    "addProduct": "添加产品",
+    "bulkUpload": "批量上传",
+    "uploadExcel": "上传Excel文件",
+    "downloadTemplate": "下载模板",
+    "manageProducts": "管理您的产品",
+    "manageOrders": "管理客户订单",
+    "noProducts": "暂无产品",
+    "uploadInstructions": "上传包含产品详细信息的Excel文件，包括型号和图片路径",
+    "selectFile": "选择文件",
+    "upload": "上传",
+    "uploading": "上传中...",
+    "uploadSuccess": "产品上传成功",
+    "uploadError": "产品上传错误",
+    "excelFormat": "Excel文件格式：型号、产品名称、描述、价格、分类、图片路径",
+    "processingProducts": "处理产品中...",
+    "productsAdded": "个产品已添加"
+  },
+  "products": {
+    "title": "产品",
+    "search": "搜索产品...",
+    "category": "分类",
+    "allCategories": "所有分类",
+    "price": "价格",
+    "addToCart": "加入购物车",
+    "viewDetails": "查看详情",
+    "noProducts": "未找到产品",
+    "sortBy": "排序",
+    "newest": "最新",
+    "priceLowest": "价格：从低到高",
+    "priceHighest": "价格：从高到低"
+  },
+  "categories": {
+    "title": "分类",
+    "subtitle": "按分类浏览产品",
+    "viewProducts": "查看产品"
   }
 }
