@@ -1,6 +1,7 @@
 import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import { getFirestore, Firestore } from 'firebase/firestore';
 import { getStorage, FirebaseStorage } from 'firebase/storage';
+import { getAnalytics, Analytics } from 'firebase/analytics';
 
 // Firebase configuration interface
 interface FirebaseConfig {
@@ -10,6 +11,7 @@ interface FirebaseConfig {
   storageBucket: string;
   messagingSenderId: string;
   appId: string;
+  measurementId?: string;
 }
 
 // Get Firebase config from environment variables
@@ -20,17 +22,20 @@ const firebaseConfig: FirebaseConfig = {
   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET || '',
   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID || '',
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID || '',
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID || '',
 };
 
 // Initialize Firebase (singleton pattern)
 let app: FirebaseApp;
 let db: Firestore;
 let storage: FirebaseStorage;
+let analytics: Analytics;
 
 // Check if all required config values are present and not undefined
-const isConfigValid = Object.entries(firebaseConfig).every(
-  ([, value]) => value !== '' && value !== undefined
-);
+// Note: measurementId is optional for Firebase Analytics
+const isConfigValid = Object.entries(firebaseConfig)
+  .filter(([key]) => key !== 'measurementId')
+  .every(([, value]) => value !== '' && value !== undefined);
 
 if (!isConfigValid) {
   const missingVars = Object.entries(firebaseConfig)
@@ -53,8 +58,13 @@ if (isConfigValid) {
 
   // Initialize Storage
   storage = getStorage(app);
+
+  // Initialize Analytics (only in browser)
+  if (typeof window !== 'undefined' && firebaseConfig.measurementId) {
+    analytics = getAnalytics(app);
+  }
 } else {
   console.warn('Firebase configuration is incomplete. Using mock data.');
 }
 
-export { app, db, storage, isConfigValid };
+export { app, db, storage, analytics, isConfigValid };
